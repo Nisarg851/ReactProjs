@@ -1,35 +1,64 @@
-import {React, Component} from 'react';
+import {React} from 'react';
 import {Card,CardImgOverlay,CardImg,CardTitle} from 'reactstrap';
 
-class Menu extends Component{
+const RenderMenuItem = ({dish,onClick}) => {
+    return(
+        <Card onClick = {()=> onClick(dish.id)}>
+            <CardImg src={dish.image} alt={dish.name}/>
+            <CardImgOverlay>
+                <CardTitle><h1>{dish.name}</h1></CardTitle>
+            </CardImgOverlay>
+        </Card>
+    );
+}
 
-    constructor(props){
-        super(props);
-    }
-
-    render(){
-
-        const menu = this.props.dishes.map((dish) => {
-            return(
-                <div key={dish.id} className="col-12 col-md-5 m-1">
-                    <Card onClick = {()=> this.props.onClick(dish.id)}>
-                        <CardImg src={dish.image} alt={dish.name}/>
-                        <CardImgOverlay>
-                            <CardTitle><h1>{dish.name}</h1></CardTitle>
-                        </CardImgOverlay>
-                    </Card>
-                </div>
-            );
-        });
-
+const Menu = (props) => {
+    const menu = props.dishes.map((dish)=>{
         return(
-            <div className="contianer">
-                <div className="row">
-                    {menu}
-                </div>
+            <div className="col-12 col-md-5 m-1" key={dish.id}>
+                <RenderMenuItem dish={dish} onClick={props.onClick}/>
             </div>
         );
-    }
+    });
+
+    return(
+        <div className="contianer">
+            <div className="row">
+                {menu}
+            </div>
+        </div>
+    );
 }
+
+// class Menu extends Component{
+
+//     constructor(props){
+//         super(props);
+//     }
+
+//     render(){
+
+//         const menu = this.props.dishes.map((dish) => {
+//             return(
+//                 <div key={dish.id} className="col-12 col-md-5 m-1">
+//                     <Card onClick = {()=> this.props.onClick(dish.id)}>
+//                         <CardImg src={dish.image} alt={dish.name}/>
+//                         <CardImgOverlay>
+//                             <CardTitle><h1>{dish.name}</h1></CardTitle>
+//                         </CardImgOverlay>
+//                     </Card>
+//                 </div>
+//             );
+//         });
+
+//         return(
+//             <div className="contianer">
+//                 <div className="row">
+//                     {menu}
+//                 </div>
+//             </div>
+//         );
+//     }
+// }
 
 export default Menu;    
