@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import {React, Component} from 'react';
 import Main from './component/MainComponent.js';
-
+import './App.css';
 class App extends Component{
 
   render(){
@@ -12,17 +12,5 @@ class App extends Component{
     );
   };
 }
-// function App() {
-//   return (
-//     <div className="App">
-//       <Navbar dark color="primary">
-//         <div className="container">
-//           <NavbarBrand href="/">Restorant ConFusion</NavbarBrand>
-//         </div>
-//       </Navbar>
-//       <Menu dishes={this.state.dishes}/>
-//     </div>
-//   );
-// }
 
 export default App;

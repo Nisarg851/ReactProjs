@@ -31,10 +31,10 @@ function renderSelectedDish(dish){
     if(dish!=null){
         return(
             <Card>
-                <CardImg src={dish.image} alt={dish.name} />
+                <CardImg width="100%" src={dish.image} alt={dish.name} />
                 <CardBody>
                     <CardTitle><h1>{dish.name}</h1></CardTitle>
-                    <CardText>{dish.description}</CardText>
+                    <CardText><h4>{dish.description}</h4></CardText>
                 </CardBody>
             </Card>
         );
