@@ -2,10 +2,12 @@ import {React, Component} from 'react';
 import Menu from './MenuComponent';
 import Header from './HeaderComponent.js';
 import Footer from './FooterComponent.js';
+import Home from './HomeComponent.js';
 import DishDetail from './dishDetailComponent';
 import {DISHES} from '../shared/dishes';
+import {Switch, Route, Redirect} from 'react-router-dom';
 
-class App extends Component{
+class Main extends Component{
   constructor(props){
     super(props);
     this.state={
@@ -20,14 +22,19 @@ class App extends Component{
   
   render(){
     return (
-      <div className="App">
+      <div className="Main">
         <Header/>
-        <Menu dishes={this.state.dishes } onClick={(dishID) => this.DishSelected(dishID)}/>
-        <DishDetail selectedDish={this.state.dishes.filter((dish)=> dish.id===this.state.selectedDish)[0]}/>
+        <Switch>
+          <Route path='/home' component={()=> <Home/>} />
+          <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} onClick={(dishID)=> this.DishSelected(dishID)}/>} />
+          <Redirect to='/home'/>
+        </Switch>
+        {/* <Menu dishes={this.state.dishes } onClick={(dishID) => this.DishSelected(dishID)}/>
+        <DishDetail selectedDish={this.state.dishes.filter((dish)=> dish.id===this.state.selectedDish)[0]}/> */}
         <Footer/>
       </div>
     );
   };
 }
 
-export default App;
+export default Main;
