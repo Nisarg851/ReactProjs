@@ -20,11 +20,11 @@ class Header extends Component {
     <React.Fragment>
       <Navbar dark expand="md">
         <div className="container">
-            <NavbarToggler onClick={this.toggleNav}/>
             <NavbarBrand href="/">
                 <img src="assets/images/logo.png" width="50" height="40" alt="Restorant Con Fusion"/>
             </NavbarBrand>
-            <Collapse isOpen={this.state.toggle}>{/* This is depecrated and can be used upto version 16.x only */}
+            <NavbarToggler onClick={this.toggleNav}/>
+            <Collapse isOpen={this.state.toggle} navbar>
               <Nav navbar className="nav">
                 <NavItem>
                   <NavLink to="/home" className="nav-link"><span className="fa fa-home fa-lg"></span> Home</NavLink>

@@ -4,14 +4,14 @@ function Footer(props) {
     return(
     <div className="footer">
         <div className="container">
-            <div className="row justify-content-center">             
-                <div className="col-4 offset-1 col-sm-2" style={{fontSize:"100%"}}>
+            <div className="row">             
+                <div className="col-4 col-sm-2" style={{fontSize:"100%"}}>
                     <h3>Links</h3>
                     <ul className="list-unstyled">
                         <li><Link to="/home">Home</Link></li>
-                        <li><Link to="/aboutus">About</Link></li>
+                        <li><Link to="/aboutus">About Us</Link></li>
                         <li><Link to="/menu">Menu</Link></li>
-                        <li><Link to="/contactus">Contact</Link></li>
+                        <li><Link to="/contactus">Contact Us</Link></li>
                     </ul>
                 </div>
                 <div className="col-4 col-sm-5">
@@ -37,7 +37,7 @@ function Footer(props) {
                     </div>
                 </div>
             </div>
-            <div className="row">             
+            <div className="row justify-content-center">             
                 <div className="col-auto text-center">
                     <p>© Copyright 2018 Ristorante Con Fusion</p>
                 </div>

@@ -33,10 +33,3 @@ address{
     color: floralwhite;
     margin: 0px;
 }
-
-.nav{
-    list-style:"none";
-    display:"flex";
-    justify-content: space-evenly;
-    font-size: 3vh;
-}
