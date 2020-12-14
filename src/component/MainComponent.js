@@ -18,27 +18,39 @@ class Main extends Component{
       dishes:DISHES,
       leaders:LEADERS,
       promotions:PROMOTIONS,
-      selectedDish:null,
+      comments:COMMENTS,
+      // selectedDish:null,
     }
+    this.showDishDetail = this.showDishDetail.bind(this);
   }
   
-  DishSelected(dishID){
-    this.setState({ selectedDish:dishID });
+  // DishSelected(dishID){
+  //   this.setState({ selectedDish:dishID });
+  // }
+
+  showDishDetail({match}){
+    return(
+      <DishDetail selectedDish={this.state.dishes.filter(dish => dish.id===parseInt(match.params.dishID))[0]}
+      comments={this.state.comments.filter(comment => comment.dishId===parseInt(match.params.dishID))}/>
+      );
   }
   
   render(){
     return (
       <div className="Main">
         <Header/>
-        <Switch>
-          <Route path='/home' component={()=> <Home dish={this.state.dishes.filter((dish)=> dish.featured)[0]} 
-                                                    leader={this.state.leaders.filter((lead)=> lead.featured)[0]}
-                                                    promotion={this.state.promotions.filter((promo)=> promo.featured)[0]}/>} 
-                                                    />
-          <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} onClick={(dishID)=> this.DishSelected(dishID)}/>} />
-          <Route exact path='/contactus' component={Contact} />
-          <Redirect to='/home'/>
-        </Switch>
+        <div className="container">
+          <Switch>
+            <Route path='/home' component={()=> <Home dish={this.state.dishes.filter((dish)=> dish.featured)[0]} 
+                                                      leader={this.state.leaders.filter((lead)=> lead.featured)[0]}
+                                                      promotion={this.state.promotions.filter((promo)=> promo.featured)[0]}/>} 
+                                                      />
+            <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} />} />
+            <Route path='/menu/:dishID' component={this.showDishDetail}/>
+            <Route exact path='/contactus' component={Contact} />
+            <Redirect to='/home'/>
+          </Switch>
+        </div>
         {/* <Menu dishes={this.state.dishes } onClick={(dishID) => this.DishSelected(dishID)}/>
         <DishDetail selectedDish={this.state.dishes.filter((dish)=> dish.id===this.state.selectedDish)[0]}/> */}
         <Footer/>
