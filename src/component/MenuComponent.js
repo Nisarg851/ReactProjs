@@ -29,7 +29,7 @@ const Menu = (props) => {
             <div className="row">
                 <Breadcrumb>
                     <BreadcrumbItem>
-                        <Link to="/home" style={{color:"black"}}>Home</Link>
+                        <Link to="/home">Home</Link>
                     </BreadcrumbItem>
                     <BreadcrumbItem active>Menu</BreadcrumbItem>
                 </Breadcrumb>
