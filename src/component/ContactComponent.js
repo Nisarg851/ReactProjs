@@ -49,7 +49,6 @@ class Contact extends Component{
             telnum:"",
             email:""
         }
-        console.log("Invalid input");
         if(this.state.touched.firstname && firstname.length<2)
             error.firstname = "First name should have atleast 2 character";
         else if(this.state.touched.firstname && firstname.length>20)

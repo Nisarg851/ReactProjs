@@ -80,7 +80,11 @@ class Header extends Component {
                             <Input type="checkbox" id="remember" name="remember"
                               innerRef={(input) => this.remember=input}/>
                             Remember me</Label>
-                            <Button type="submit" value="submit" color="success" style={{float:"right"}}>Submit</Button>
+                            <FormGroup style={{float:"right"}}>
+                              <Button type="submit" value="submit" color="success">Submit</Button>
+                              {"  "}
+                              <Button color="danger" onClick={this.toggleModal}>Cancle</Button>
+                            </FormGroup>
                         </FormGroup>
                       </Form>
                     </ModalBody>

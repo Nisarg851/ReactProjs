@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom';
 function renderComments(dishcmnt){
     let dishComment;
         if(dishcmnt!=null){
-            console.log(dishcmnt);
             dishComment = dishcmnt.map((cmt)=>{
                 let cmtDate = new Date(cmt.date);
                 cmtDate = cmtDate.toDateString();
@@ -30,7 +29,6 @@ function renderComments(dishcmnt){
 }
     
 function renderSelectedDish(dish){
-    console.log(dish);
     if(dish!=null){
         return(
             <Card>
