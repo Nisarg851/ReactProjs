@@ -1,6 +1,41 @@
-import {React} from 'react';
-import {Card,CardBody,CardTitle,CardImg,CardText,Breadcrumb,BreadcrumbItem} from 'reactstrap';
+import {useState} from 'react';
+import {Card,CardBody,CardTitle,CardImg,CardText,Breadcrumb,BreadcrumbItem,Modal,ModalBody,ModalHeader,Button,Row, Label} from 'reactstrap';
 import {Link} from 'react-router-dom';
+import {Control, LocalForm, Errors} from 'react-redux-form';
+
+function ToggleComment(){
+    let [toggleCommentModal,toggleComment] = useState(false);
+    return(
+        <div>
+            <Button style={{backgroundColor:"white", color:"Grey"}} onClick={() => toggleComment(true)}><i className="fa fa-pencil fa-lg"></i> Submit Comment</Button>
+            <Modal isOpen={toggleCommentModal}>
+                <ModalHeader>Submit Comment</ModalHeader>
+                <ModalBody>
+                    <LocalForm>
+                        <Row className="Form-group">
+                            <Label htmlFor='rating'>Rating</Label>
+                            <Control.select model='.rating'name="rating" id="rating">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </Control.select>
+                        </Row>
+                        <Row className="Form-group">
+                            <Label htmlFor='user-name'>Your Name</Label>
+                            <Control.text model=".user-name" name="user-name" id="user-name" />
+                        </Row>
+                        <Row className="Form-group">
+                            <Label htmlFor='comment'>Comment</Label>
+                            <Control.textarea model="comment" name="comment" id="comment" row="12"/>                            
+                        </Row>
+                    </LocalForm>
+                </ModalBody>
+            </Modal>
+        </div>
+    );
+}
 
 function renderComments(dishcmnt){
     let dishComment;
@@ -17,15 +52,21 @@ function renderComments(dishcmnt){
                     );
                 }
             );
-            dishComment = (<div  className="col-12 col-md-5 m-1">
+            dishComment = (<div>
                                 <h1>Comments</h1>
                                 <ul className="list-unstyled">{dishComment}</ul>
+                                {/* <Button style={{backgroundColor:"white", color:"Grey"}} onClick={toggleComment}><i className="fa fa-pencil fa-lg"></i> Submit Comment</Button> */}
+                                <ToggleComment/>
                             </div>
                         );
         }else{
             dishComment=<div></div>
         }   
-    return dishComment;
+    return (
+        <div  className="col-12 col-md-5 m-1">
+            {dishComment}
+        </div>
+    );
 }
     
 function renderSelectedDish(dish){
@@ -45,6 +86,10 @@ function renderSelectedDish(dish){
 }
     
 const DishDetail = (props) => {
+
+    // let [toggleModalComment] = false;
+    console.log("re-rendered")
+
     return(
         <div className="container">
             <div className="row">
