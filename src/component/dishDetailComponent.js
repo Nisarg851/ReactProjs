@@ -1,39 +1,82 @@
-import {useState} from 'react';
-import {Card,CardBody,CardTitle,CardImg,CardText,Breadcrumb,BreadcrumbItem,Modal,ModalBody,ModalHeader,Button,Row, Label} from 'reactstrap';
+import {useState, Fragment} from 'react';
+import {Card,CardBody,CardTitle,CardImg,CardText,Breadcrumb,BreadcrumbItem,Modal,ModalBody,ModalHeader,Button,Row,Label} from 'reactstrap';
 import {Link} from 'react-router-dom';
-import {Control, LocalForm, Errors} from 'react-redux-form';
+import {Control,LocalForm,Errors} from 'react-redux-form';
+
+const required = (val) => val && val.length;
+const minLength = (len) => (val) => val && val.length>=len;
+const maxLength = (len) => (val) => val && val.length<=len;
+
+function handleForm(values){
+    values.rating = values.rating===undefined ? 1 : values.rating;
+    values.name = values.name===undefined ? "Unknown" : values.name;
+    values.comment = values.comment===undefined ? "None" : values.comment;
+    alert("Rating: "+values.rating+"\nAuthor: "+values.name+"\nComment: "+values.comment);
+}
 
 function ToggleComment(){
     let [toggleCommentModal,toggleComment] = useState(false);
     return(
-        <div>
+        <Fragment>
             <Button style={{backgroundColor:"white", color:"Grey"}} onClick={() => toggleComment(true)}><i className="fa fa-pencil fa-lg"></i> Submit Comment</Button>
             <Modal isOpen={toggleCommentModal}>
-                <ModalHeader>Submit Comment</ModalHeader>
+                <ModalHeader><i>Submit Comment</i><i className="fa fa-times" onClick={() => toggleComment()} style={{marginLeft:"17rem"}}></i></ModalHeader>
                 <ModalBody>
-                    <LocalForm>
-                        <Row className="Form-group">
-                            <Label htmlFor='rating'>Rating</Label>
-                            <Control.select model='.rating'name="rating" id="rating">
-                                <option>1</option>
+                    <LocalForm onSubmit={(value) => handleForm(value)}>
+                        <Row>
+                            <Label htmlFor="rating">Rating</Label>
+                        </Row>
+                        <Row>
+                            <Control.select model=".rating" id="rating" className="form-control">
+                                <option active>1</option>
                                 <option>2</option>
                                 <option>3</option>
                                 <option>4</option>
                                 <option>5</option>
                             </Control.select>
                         </Row>
-                        <Row className="Form-group">
-                            <Label htmlFor='user-name'>Your Name</Label>
-                            <Control.text model=".user-name" name="user-name" id="user-name" />
+                        <Row>
+                            <Label htmlFor="author">Your Name</Label>
                         </Row>
-                        <Row className="Form-group">
-                            <Label htmlFor='comment'>Comment</Label>
-                            <Control.textarea model="comment" name="comment" id="comment" row="12"/>                            
+                        <Row className="form-group">
+                            <Control.text model=".name" id="author" className="form-control"
+                                          validators={{
+                                              required,
+                                              minLength: minLength(3),
+                                              maxLength: maxLength(15)
+                                          }}/>
+                            <Errors model=".name"
+                                    className="text-danger"
+                                    show="touched"
+                                    messages={{
+                                        required: "Name field required",
+                                        minLength: "name should be atleast 3 characters",
+                                        maxLength: "name should be atmost 15 charactrs",
+                                    }}/>
                         </Row>
+                        <Row>
+                            <Label htmlFor="comment">Comment</Label>
+                        </Row>
+                        <Row className="form-group">
+                            <Control.textarea rows="6" model=".comment" id="comment" className="form-control"
+                                                validators={{
+                                                    required,
+                                                    maxLength: maxLength(500),
+                                                }}/>
+                            <Errors className="text-danger"
+                                    model=".comment"
+                                    show="touched"
+                                    messages={{
+                                        required: "Comment field is required",
+                                        maxLength: "maximum characters should be less than 500 characters"
+                                    }}/>
+                        </Row>
+                        <Button color="primary">Submit</Button>{" "}
+                        <Button color="danger" onClick={() => toggleComment()}>Cancle</Button>
                     </LocalForm>
                 </ModalBody>
             </Modal>
-        </div>
+        </Fragment>
     );
 }
 
@@ -52,12 +95,12 @@ function renderComments(dishcmnt){
                     );
                 }
             );
-            dishComment = (<div>
+            dishComment = (<Fragment>
                                 <h1>Comments</h1>
                                 <ul className="list-unstyled">{dishComment}</ul>
                                 {/* <Button style={{backgroundColor:"white", color:"Grey"}} onClick={toggleComment}><i className="fa fa-pencil fa-lg"></i> Submit Comment</Button> */}
                                 <ToggleComment/>
-                            </div>
+                            </Fragment>
                         );
         }else{
             dishComment=<div></div>
@@ -86,9 +129,6 @@ function renderSelectedDish(dish){
 }
     
 const DishDetail = (props) => {
-
-    // let [toggleModalComment] = false;
-    console.log("re-rendered")
 
     return(
         <div className="container">
