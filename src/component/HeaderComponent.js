@@ -34,7 +34,7 @@ class Header extends Component {
       <Navbar dark expand="md">
         <div className="container">
             <NavbarBrand href="/">
-                <img src="assets/images/logo.png" width="50" height="40" alt="Restorant Con Fusion"/>
+                <img src="./assets/images/logo.png" width="50" height="40" alt="Restorant Con Fusion"/>
             </NavbarBrand>
             <NavbarToggler onClick={this.toggleNav}/>
             <Collapse isOpen={this.state.toggle} navbar>

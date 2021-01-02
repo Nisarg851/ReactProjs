@@ -8,6 +8,7 @@ import Contact from './ContactComponent.js';
 import DishDetail from './dishDetailComponent';
 import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {addComment} from '../redux/ActionCreator';
 
 const connectStoreToProps= (state) => {
   return {
@@ -17,6 +18,10 @@ const connectStoreToProps= (state) => {
     comments:state.comments
   }
 }
+
+const DishpatchActions = (dishpatch) => ({
+  addComment: (dishID,rating,author,comment) => dishpatch(addComment(dishID,rating,author,comment))
+})
 
 class Main extends Component{
   constructor(props){
@@ -31,7 +36,8 @@ class Main extends Component{
   showDishDetail({match}){
     return(
       <DishDetail selectedDish={this.props.dishes.filter(dish => dish.id===parseInt(match.params.dishID))[0]}
-      comments={this.props.comments.filter(comment => comment.dishId===parseInt(match.params.dishID))}/>
+      comments={this.props.comments.filter(comment => comment.dishId===parseInt(match.params.dishID))}
+      addComment={this.props.addComment}/>
       );
   }
   
@@ -60,4 +66,4 @@ class Main extends Component{
   };
 }
 
-export default withRouter(connect(connectStoreToProps)(Main));
+export default withRouter(connect(connectStoreToProps, DishpatchActions)(Main));

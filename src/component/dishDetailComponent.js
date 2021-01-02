@@ -7,14 +7,14 @@ const required = (val) => val && val.length;
 const minLength = (len) => (val) => val && val.length>=len;
 const maxLength = (len) => (val) => val && val.length<=len;
 
-function handleForm(values){
-    values.rating = values.rating===undefined ? 1 : values.rating;
-    values.name = values.name===undefined ? "Unknown" : values.name;
-    values.comment = values.comment===undefined ? "None" : values.comment;
-    alert("Rating: "+values.rating+"\nAuthor: "+values.name+"\nComment: "+values.comment);
+function handleForm(values,addComment,dishId,toggleComment){
+    let rating = values.rating===undefined ? 1 : values.rating;
+    alert("Rating: "+values.rating+"\nAuthor: "+values.author+"\nComment: "+values.comment);
+    addComment(dishId,rating,values.author,values.comment);
+    toggleComment();
 }
 
-function ToggleComment(){
+function ToggleComment(props){
     let [toggleCommentModal,toggleComment] = useState(false);
     return(
         <Fragment>
@@ -22,7 +22,7 @@ function ToggleComment(){
             <Modal isOpen={toggleCommentModal}>
                 <ModalHeader><i>Submit Comment</i><i className="fa fa-times" onClick={() => toggleComment()} style={{marginLeft:"17rem"}}></i></ModalHeader>
                 <ModalBody>
-                    <LocalForm onSubmit={(value) => handleForm(value)}>
+                    <LocalForm onSubmit={(value) => handleForm(value,props.addComment,props.dishId,toggleComment)}>
                         <Row>
                             <Label htmlFor="rating">Rating</Label>
                         </Row>
@@ -39,13 +39,13 @@ function ToggleComment(){
                             <Label htmlFor="author">Your Name</Label>
                         </Row>
                         <Row className="form-group">
-                            <Control.text model=".name" id="author" className="form-control"
+                            <Control.text model=".author" id="author" className="form-control"
                                           validators={{
                                               required,
                                               minLength: minLength(3),
                                               maxLength: maxLength(15)
                                           }}/>
-                            <Errors model=".name"
+                            <Errors model=".author"
                                     className="text-danger"
                                     show="touched"
                                     messages={{
@@ -80,7 +80,7 @@ function ToggleComment(){
     );
 }
 
-function renderComments(dishcmnt){
+function renderComments(dishcmnt,addComment,dishId){
     let dishComment;
         if(dishcmnt!=null){
             dishComment = dishcmnt.map((cmt)=>{
@@ -99,7 +99,7 @@ function renderComments(dishcmnt){
                                 <h1>Comments</h1>
                                 <ul className="list-unstyled">{dishComment}</ul>
                                 {/* <Button style={{backgroundColor:"white", color:"Grey"}} onClick={toggleComment}><i className="fa fa-pencil fa-lg"></i> Submit Comment</Button> */}
-                                <ToggleComment/>
+                                <ToggleComment addComment={addComment} dishId={dishId}/>
                             </Fragment>
                         );
         }else{
@@ -153,70 +153,10 @@ const DishDetail = (props) => {
                 <div  className="col-12 col-md-5 m-1">
                     {renderSelectedDish(props.selectedDish)}
                 </div>
-                {renderComments(props.comments)}
+                {renderComments(props.comments,props.addComment,props.selectedDish.id)}
             </div>
         </div>
     );
 }
-
-// class DishDetail extends Component{
-    
-//     constructor(props){
-//         super(props);
-//     }
-
-//     renderSelectedDish(dish){
-//         if(dish!=null){
-//             return(
-//                 <Card>
-//                     <CardImg src={dish.image} alt={dish.name} />
-//                     <CardBody>
-//                         <CardTitle><h1>{dish.name}</h1></CardTitle>
-//                         <CardText>{dish.description}</CardText>
-//                     </CardBody>
-//                 </Card>
-//             );
-//         }else{
-//             return(<div></div>);
-//         }
-//     }
-
-//     renderComments(dish){
-//         let dishComment;
-//         if(dish!=null){
-//             dishComment = dish.comments.map((cmt)=>{
-//                 let cmtDate = new Date(cmt.date);
-//                 cmtDate = cmtDate.toDateString();
-//                 return(
-//                         <li>
-//                             <br></br>
-//                             <h3>{cmt.comment}</h3>
-//                             <h3>--{cmt.author}, {cmtDate}</h3>
-//                         </li>
-//                     );
-//                 }
-//             );
-//             dishComment = (<div  className="col-12 col-md-5 m-1">
-//                                 <h1>Comments</h1>
-//                                 <ul className="list-unstyled">{dishComment}</ul>
-//                             </div>
-//                             );
-//         }else{
-//             dishComment=<div></div>
-//         }   
-//         return dishComment;
-//     }
-
-//     render(){
-    //     return(
-    //     <div className="row">
-    //         <div  className="col-12 col-md-5 m-1">
-    //             {this.renderSelectedDish(this.props.selectedDish)}
-    //         </div>
-    //         {this.renderComments(this.props.selectedDish)}
-    //     </div>
-    //     );
-    // }
-// }
 
 export default DishDetail;
