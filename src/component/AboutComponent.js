@@ -2,23 +2,6 @@ import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media} from 'reactstrap';
 import { Link } from 'react-router-dom';
 
-function RenderLeader({leader}){
-    return(
-        <Media className="m-4">
-            <Media className="mr-5" >
-                <Media object src={leader.image} alt={leader.name} />
-            </Media>
-            <Media body>
-                <Media heading>
-                    {leader.name}
-                </Media>
-                <Media className="mb-2">{leader.designation}</Media>
-                <Media>{leader.description}</Media>
-            </Media>
-        </Media>
-    );
-}
-
 function About(props) {
 
     const leaders = props.leaders.map((lead) => {
@@ -45,8 +28,9 @@ function About(props) {
             <div className="row row-content">
                 <div className="col-12 col-md-6">
                     <h2>Our History</h2>
-                    <p>Started in 2010, Ristorante con Fusion quickly established itself as a culinary icon par excellence in Hong Kong. With its unique brand of world fusion cuisine that can be found nowhere else, it enjoys patronage from the A-list clientele in Hong Kong.  Featuring four of the best three-star Michelin chefs in the world, you never know what will arrive on your plate the next time you visit us.</p>
-                    <p>The restaurant traces its humble beginnings to <em>The Frying Pan</em>, a successful chain started by our CEO, Mr. Peter Pan, that featured for the first time the world's best cuisines in a pan.</p>
+                    <p>Started in 2010, Ristorante con Fusion quickly established itself as a culinary icon par excellence in Hong Kong. With its unique brand of world fusion cuisine that can be found nowhere else, it enjoys patronage from the A-list clientele in Hong Kong. 
+                        Featuring four of the best three-star Michelin chefs in the world, you never know what will arrive on your plate the next time you visit us.</p>
+                    <p>The restaurant traces its humble beginnings to The Frying Pan, a successful chain started by our CEO, Mr. Peter Pan, that featured for the first time the world's best cuisines in a pan.</p>
                 </div>
                 <div className="col-12 col-md-5">
                     <Card>
@@ -91,6 +75,24 @@ function About(props) {
                 </div>
             </div>
         </div>
+    );
+}
+
+
+function RenderLeader({leader}){
+    return(
+        <Media className="m-4">
+            <Media className="mr-5" >
+                <Media object src={leader.image} alt={leader.name} />
+            </Media>
+            <Media body>
+                <Media heading>
+                    {leader.name}
+                </Media>
+                <Media className="mb-2">{leader.designation}</Media>
+                <Media>{leader.description}</Media>
+            </Media>
+        </Media>
     );
 }
 
